@@ -25,7 +25,6 @@ function useTypewriter(words, speed = 120, delay = 1500) {
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const currentWord = words[wordIndex];
@@ -86,6 +85,8 @@ function Counter({ value, label }) {
 export default function App() {
   const [dark, setDark] = useState(true);
   const [aboutTab, setAboutTab] = useState("skills");
+  const [menuOpen, setMenuOpen] = useState(false);
+
 
   const typedText = useTypewriter([
     "MERN Stack Engineer",
