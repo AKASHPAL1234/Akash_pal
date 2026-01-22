@@ -6,19 +6,18 @@ import {
   Download,
   Sun,
   Moon,
-  ExternalLink,
+  Menu,
+  X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import projects from "./projects.json";
 import profile from "/profile1.png";
 import profile1 from "/profile4.png";
+
 const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 const FRONTEND = import.meta.env.VITE_DOMAIN;
 
-
-
-
-// ROBUST Typewriter Hook
+/* -------------------- TYPEWRITER -------------------- */
 function useTypewriter(words, speed = 120, delay = 1500) {
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
@@ -28,27 +27,24 @@ function useTypewriter(words, speed = 120, delay = 1500) {
   useEffect(() => {
     const currentWord = words[wordIndex];
 
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          setText(currentWord.slice(0, charIndex + 1));
-          setCharIndex((prev) => prev + 1);
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        setText(currentWord.slice(0, charIndex + 1));
+        setCharIndex((p) => p + 1);
 
-          if (charIndex + 1 === currentWord.length) {
-            setTimeout(() => setIsDeleting(true), delay);
-          }
-        } else {
-          setText(currentWord.slice(0, charIndex - 1));
-          setCharIndex((prev) => prev - 1);
-
-          if (charIndex - 1 === 0) {
-            setIsDeleting(false);
-            setWordIndex((prev) => (prev + 1) % words.length);
-          }
+        if (charIndex + 1 === currentWord.length) {
+          setTimeout(() => setIsDeleting(true), delay);
         }
-      },
-      isDeleting ? speed / 2 : speed,
-    );
+      } else {
+        setText(currentWord.slice(0, charIndex - 1));
+        setCharIndex((p) => p - 1);
+
+        if (charIndex - 1 === 0) {
+          setIsDeleting(false);
+          setWordIndex((p) => (p + 1) % words.length);
+        }
+      }
+    }, isDeleting ? speed / 2 : speed);
 
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, wordIndex, words, speed, delay]);
@@ -56,19 +52,20 @@ function useTypewriter(words, speed = 120, delay = 1500) {
   return text;
 }
 
+/* -------------------- COUNTER -------------------- */
 function Counter({ value, label }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     let start = 0;
     const duration = 1500;
-    const stepTime = Math.max(Math.floor(duration / value), 20);
+    const step = Math.max(Math.floor(duration / value), 20);
 
     const timer = setInterval(() => {
-      start += 1;
+      start++;
       setCount(start);
       if (start === value) clearInterval(timer);
-    }, stepTime);
+    }, step);
 
     return () => clearInterval(timer);
   }, [value]);
@@ -81,8 +78,10 @@ function Counter({ value, label }) {
   );
 }
 
+/* ==================== APP ==================== */
 export default function App() {
   const [dark, setDark] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [aboutTab, setAboutTab] = useState("skills");
 
   const typedText = useTypewriter([
@@ -97,28 +96,24 @@ export default function App() {
   }, [dark]);
 
   return (
-    <div
-      className={
-        dark
-          ? "bg-black text-white scroll-smooth"
-          : "bg-gray-100 text-gray-900 scroll-smooth"
-      }
-    >
-      {/* Navbar */}
+    <div className={dark ? "bg-black text-white" : "bg-gray-100 text-gray-900"}>
+
+      {/* ================= NAVBAR ================= */}
       <nav
-        className={
-          dark
-            ? "fixed top-0 w-full z-50 bg-black/80 backdrop-blur"
-            : "fixed top-0 w-full z-50 bg-white/80 backdrop-blur"
-        }
+        className={`fixed top-0 w-full z-50 backdrop-blur ${
+          dark ? "bg-black/80" : "bg-white/80"
+        }`}
       >
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-8 py-5">
-          <h1 className="font-bold text-4xl tracking-wide">Akash</h1>
-          <div className="flex gap-8 items-center">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+          <h1 className="font-bold text-3xl">Akash</h1>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex gap-8 items-center">
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
+
             <button
               onClick={() => setDark(!dark)}
               className="p-2 rounded-lg border"
@@ -126,24 +121,56 @@ export default function App() {
               {dark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
           </div>
+
+          {/* Mobile Button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2 rounded-lg border"
+          >
+            {menuOpen ? <X /> : <Menu />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden px-6 pb-6 flex flex-col gap-5">
+            {["home", "about", "projects", "contact"].map((item) => (
+              <a
+                key={item}
+                href={`#${item}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </a>
+            ))}
+
+            <button
+              onClick={() => {
+                setDark(!dark);
+                setMenuOpen(false);
+              }}
+              className="p-2 w-fit rounded-lg border"
+            >
+              {dark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
+        )}
       </nav>
 
-      {/* Hero */}
+      {/* ================= HERO ================= */}
       <section
         id="home"
         className="min-h-screen grid md:grid-cols-2 items-center pt-24 max-w-7xl mx-auto px-8"
       >
         <div>
-          <span className="text-indigo-500 font-semibold tracking-widest block min-h-6">
+          <span className="text-indigo-500 font-semibold block min-h-6">
             {typedText}
             <span className="animate-pulse">|</span>
           </span>
 
-          <h1 className="text-4xl md:text-5xl font-bold mt-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold mt-4">
             Hi, I’m <span className="text-indigo-500">Akash</span>
-            <br />
-            Pal | MERN Engineer
+            <br /> Pal | MERN Engineer
           </h1>
 
           <p className="text-gray-400 mt-6 max-w-xl">
@@ -155,10 +182,7 @@ export default function App() {
             <a href="https://github.com/AKASHPAL1234" target="_blank">
               <Github />
             </a>
-            <a
-              href="https://www.linkedin.com/in/akash-pal-0120342a7/"
-              target="_blank"
-            >
+            <a href="https://www.linkedin.com/in/akash-pal-0120342a7/" target="_blank">
               <Linkedin />
             </a>
             <a href="mailto:palankit86762@gmail.com">
@@ -175,23 +199,17 @@ export default function App() {
           </a>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex justify-center"
-        >
-          
-          <div className="relative mt-8 my-6">
-            <div className="absolute inset-0 rounded-full bg-indigo-500 blur-3xl opacity-20"></div>
+        <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}>
+          <div className="relative mt-8 flex justify-center">
             <img
               src={profile}
-              className="relative w-[320px] md:w-105 aspect-square object-cover rounded-full  shadow-2xl scale-110 translate-y-2.5 hover:scale-115 transition-transform duration-500"
+              className="w-[320px] rounded-full shadow-2xl"
             />
           </div>
         </motion.div>
       </section>
 
-      {/* Stats */}
+      {/* ================= STATS ================= */}
       <section className="py-16 border-t border-gray-800">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-12">
           <Counter value={15} label="Projects" />
