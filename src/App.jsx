@@ -223,13 +223,13 @@ export default function App() {
         id="about"
         className="py-20 px-8 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center"
       >
-        <div className="relative flex justify-center">
-          <div className="absolute inset-0 rounded-full   blur-3xl opacity-20"></div>
-          <img
-            src={profile1}
-            className="relative w-[320px] md:w-105  object-cover rounded-full  shadow-2xl scale-110 translate-y-2.5 hover:scale-115 transition-transform duration-500"
-          />
-        </div>
+        <div className="relative mt-8 my-6">
+            <div className="absolute inset-0 rounded-full bg-indigo-500 blur-3xl opacity-20"></div>
+            <img
+              src={profile}
+              className="relative w-[320px] md:w-105 aspect-square object-cover rounded-full  shadow-2xl scale-110 translate-y-2.5 hover:scale-115 transition-transform duration-500"
+            />
+          </div>
 
         <div>
           <h2 className="text-4xl font-bold mb-6">About Me</h2>
