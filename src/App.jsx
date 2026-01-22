@@ -7,6 +7,7 @@ import {
   Sun,
   Moon,
   ExternalLink,
+  Menu,
   X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
