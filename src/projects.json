@@ -1,0 +1,58 @@
+
+
+[
+  {
+    "id": 1,
+    "title": "OneDayJob",
+    "description": "Job portal built with MERN stack and JWT auth.",
+    "image": "./onedayjob (1).png",
+    "link": "https://onedayjob.space",
+    "github": "https://github.com/AKASHPAL1234/Onedayjobfinal"
+  },
+  {
+    "id": 2,
+    "title": "SkyBlog",
+    "description": "Sky-Blog, a modern, secure blogging platform built from scratch..",
+    "image": "./Blog.png",
+    "link": "https://sky-blog-phi.vercel.app",
+    "github": "https://github.com/AKASHPAL1234"
+  }, {
+    "id": 3,
+    "title": "Skycare",
+    "description": "a full-stack healthcare web application that allows users to find doctors, book appointments, and attend secure video consultations — all inside one platform.",
+    "image": "./skycare.png",
+    "link": "https://skycare-rho.vercel.app",
+    "github": "https://github.com/AKASHPAL1234/Onedayjobfinal"
+  },
+  {
+    "id": 4,
+    "title": "Youtube",
+    "description": " YouTube Clone",
+    "image": "./youtube.png",
+    "link": "https://yt-clone-6lyq.onrender.com",
+    "github": "https://github.com/AKASHPAL1234"
+  }, {
+    "id": 5,
+    "title": "SkyBook",
+    "description": "Job portal built with MERN stack and JWT auth.",
+    "image": "./book.png",
+    "link": "https://bookstoreee.onrender.com",
+    "github": "https://github.com/AKASHPAL1234/Onedayjobfinal"
+  },
+  {
+    "id": 6,
+    "title": "Sky-virtual-assistent",
+    "description": "AI powered content generation platform.",
+    "image": "skyassistent.png",
+    "link": "https://virtualaifrontend.onrender.com",
+    "github": "https://github.com/AKASHPAL1234"
+  },
+  {
+    "id": 7,
+    "title": "Skymoment_AI",
+    "description": "AI powered content generation platform.",
+    "image": "skymoment.png",
+    "link": "https://skymomentai.onrender.com",
+    "github": "https://github.com/AKASHPAL1234"
+  }
+]
