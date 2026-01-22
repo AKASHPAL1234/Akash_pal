@@ -310,7 +310,7 @@ export default function App() {
       {/* Projects */}
       
 
-      <section id="projects" className="py-20 px-8 max-w-7xl mx-auto">
+    <section id="projects" className="py-20 px-8 max-w-7xl mx-auto">
   <h2 className="text-4xl font-bold mb-10">Projects</h2>
 
   <div className="grid md:grid-cols-3 gap-10">
@@ -320,39 +320,40 @@ export default function App() {
         whileHover={{ y: -8 }}
         className="bg-gray-900 rounded-xl overflow-hidden group"
       >
-        {/* Image + Hover Overlay */}
-        <div className="relative">
-  <img
-    src={project.image}
-    alt={project.title}
-    className="h-48 w-full object-cover"
-  />
+        {/* IMAGE — FULLY CLICKABLE */}
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative block"
+        >
+          <img
+            src={project.image}
+            alt={project.title}
+            className="h-48 w-full object-cover"
+          />
 
-  {/* Hover Overlay */}
-  <div
-    className="absolute inset-0 z-10 flex items-center justify-center
-               bg-black/70 opacity-0 group-hover:opacity-100
-               transition-opacity duration-300"
-  >
-    <a
-      href={project.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="px-6 py-2 bg-indigo-600 rounded-lg
-                 text-white font-semibold hover:bg-indigo-700"
-    >
-      Live →
-    </a>
-  </div>
-</div>
+          {/* Hover overlay (visual only) */}
+          <div
+            className="absolute inset-0 flex items-center justify-center
+            bg-black/70 opacity-0 group-hover:opacity-100
+            transition-opacity duration-300"
+          >
+            <span
+              className="px-6 py-2 bg-indigo-600 rounded-lg
+              text-white font-semibold"
+            >
+              Live →
+            </span>
+          </div>
+        </a>
 
-
-        {/* Content */}
+        {/* CONTENT */}
         <div className="p-6 space-y-3">
           <h3 className="text-xl font-semibold">{project.title}</h3>
           <p className="text-gray-400 text-sm">{project.description}</p>
 
-          {/* GitHub Link (Always Visible) */}
+          {/* GitHub link */}
           <a
             href={project.github}
             target="_blank"
@@ -366,6 +367,7 @@ export default function App() {
     ))}
   </div>
 </section>
+
 
 
      <section id="contact" className="py-20 max-w-3xl mx-auto px-6">
