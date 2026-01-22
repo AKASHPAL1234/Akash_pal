@@ -6,45 +6,51 @@ import {
   Download,
   Sun,
   Moon,
-  Menu,
+  ExternalLink,
   X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import projects from "./projects.json";
 import profile from "/profile1.png";
 import profile1 from "/profile4.png";
-
 const ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 const FRONTEND = import.meta.env.VITE_DOMAIN;
 
-/* -------------------- TYPEWRITER -------------------- */
+
+
+
+// ROBUST Typewriter Hook
 function useTypewriter(words, speed = 120, delay = 1500) {
   const [text, setText] = useState("");
   const [wordIndex, setWordIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const currentWord = words[wordIndex];
 
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setText(currentWord.slice(0, charIndex + 1));
-        setCharIndex((p) => p + 1);
+    const timeout = setTimeout(
+      () => {
+        if (!isDeleting) {
+          setText(currentWord.slice(0, charIndex + 1));
+          setCharIndex((prev) => prev + 1);
 
-        if (charIndex + 1 === currentWord.length) {
-          setTimeout(() => setIsDeleting(true), delay);
-        }
-      } else {
-        setText(currentWord.slice(0, charIndex - 1));
-        setCharIndex((p) => p - 1);
+          if (charIndex + 1 === currentWord.length) {
+            setTimeout(() => setIsDeleting(true), delay);
+          }
+        } else {
+          setText(currentWord.slice(0, charIndex - 1));
+          setCharIndex((prev) => prev - 1);
 
-        if (charIndex - 1 === 0) {
-          setIsDeleting(false);
-          setWordIndex((p) => (p + 1) % words.length);
+          if (charIndex - 1 === 0) {
+            setIsDeleting(false);
+            setWordIndex((prev) => (prev + 1) % words.length);
+          }
         }
-      }
-    }, isDeleting ? speed / 2 : speed);
+      },
+      isDeleting ? speed / 2 : speed,
+    );
 
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, wordIndex, words, speed, delay]);
@@ -52,20 +58,19 @@ function useTypewriter(words, speed = 120, delay = 1500) {
   return text;
 }
 
-/* -------------------- COUNTER -------------------- */
 function Counter({ value, label }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     let start = 0;
     const duration = 1500;
-    const step = Math.max(Math.floor(duration / value), 20);
+    const stepTime = Math.max(Math.floor(duration / value), 20);
 
     const timer = setInterval(() => {
-      start++;
+      start += 1;
       setCount(start);
       if (start === value) clearInterval(timer);
-    }, step);
+    }, stepTime);
 
     return () => clearInterval(timer);
   }, [value]);
@@ -78,10 +83,8 @@ function Counter({ value, label }) {
   );
 }
 
-/* ==================== APP ==================== */
 export default function App() {
   const [dark, setDark] = useState(true);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [aboutTab, setAboutTab] = useState("skills");
 
   const typedText = useTypewriter([
@@ -96,10 +99,15 @@ export default function App() {
   }, [dark]);
 
   return (
-    <div className={dark ? "bg-black text-white" : "bg-gray-100 text-gray-900"}>
-
-      {/* ================= NAVBAR ================= */}
-      <nav
+    <div
+      className={
+        dark
+          ? "bg-black text-white scroll-smooth"
+          : "bg-gray-100 text-gray-900 scroll-smooth"
+      }
+    >
+      {/* Navbar */}
+     <nav
         className={`fixed top-0 w-full z-50 backdrop-blur ${
           dark ? "bg-black/80" : "bg-white/80"
         }`}
@@ -157,20 +165,21 @@ export default function App() {
         )}
       </nav>
 
-      {/* ================= HERO ================= */}
+      {/* Hero */}
       <section
         id="home"
         className="min-h-screen grid md:grid-cols-2 items-center pt-24 max-w-7xl mx-auto px-8"
       >
         <div>
-          <span className="text-indigo-500 font-semibold block min-h-6">
+          <span className="text-indigo-500 font-semibold tracking-widest block min-h-6">
             {typedText}
             <span className="animate-pulse">|</span>
           </span>
 
-          <h1 className="text-4xl md:text-5xl font-bold mt-4">
+          <h1 className="text-4xl md:text-5xl font-bold mt-4 leading-tight">
             Hi, I’m <span className="text-indigo-500">Akash</span>
-            <br /> Pal | MERN Engineer
+            <br />
+            Pal | MERN Engineer
           </h1>
 
           <p className="text-gray-400 mt-6 max-w-xl">
@@ -182,7 +191,10 @@ export default function App() {
             <a href="https://github.com/AKASHPAL1234" target="_blank">
               <Github />
             </a>
-            <a href="https://www.linkedin.com/in/akash-pal-0120342a7/" target="_blank">
+            <a
+              href="https://www.linkedin.com/in/akash-pal-0120342a7/"
+              target="_blank"
+            >
               <Linkedin />
             </a>
             <a href="mailto:palankit86762@gmail.com">
@@ -199,17 +211,23 @@ export default function App() {
           </a>
         </div>
 
-        <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}>
-          <div className="relative mt-8 flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex justify-center"
+        >
+          
+          <div className="relative mt-8 my-6">
+            <div className="absolute inset-0 rounded-full bg-indigo-500 blur-3xl opacity-20"></div>
             <img
               src={profile}
-              className="w-[320px] rounded-full shadow-2xl"
+              className="relative w-[320px] md:w-105 aspect-square object-cover rounded-full  shadow-2xl scale-110 translate-y-2.5 hover:scale-115 transition-transform duration-500"
             />
           </div>
         </motion.div>
       </section>
 
-      {/* ================= STATS ================= */}
+      {/* Stats */}
       <section className="py-16 border-t border-gray-800">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-12">
           <Counter value={15} label="Projects" />
@@ -223,13 +241,13 @@ export default function App() {
         id="about"
         className="py-20 px-8 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center"
       >
-        <div className="relative mt-8 my-6">
-            <div className="absolute inset-0 rounded-full bg-indigo-500 blur-3xl opacity-20"></div>
-            <img
-              src={profile}
-              className="relative w-[320px] md:w-105 aspect-square object-cover rounded-full  shadow-2xl scale-110 translate-y-2.5 hover:scale-115 transition-transform duration-500"
-            />
-          </div>
+        <div className="relative flex justify-center">
+          <div className="absolute inset-0 rounded-full   blur-3xl opacity-20"></div>
+          <img
+            src={profile1}
+            className="relative w-[320px] md:w-105  object-cover rounded-full  shadow-2xl scale-110 translate-y-2.5 hover:scale-115 transition-transform duration-500"
+          />
+        </div>
 
         <div>
           <h2 className="text-4xl font-bold mb-6">About Me</h2>
